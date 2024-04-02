@@ -2,6 +2,8 @@
 use clap::Parser;
 use std::{fs::File, path::PathBuf};
 
+mod alarm;
+
 const DEFAULT_CONFIG_FILE_NAME: &str = "proc_alarm.json";
 
 #[derive(Parser)]
@@ -31,7 +33,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .read(true)
         .open(config_path)?;
 
-    // GUI app
+    let alarms = alarm::read_alarms(&mut config_file)?;
 
     Ok(())
 }
