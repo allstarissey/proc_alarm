@@ -1,8 +1,10 @@
 #![allow(unused)]
 use clap::Parser;
+use iced::{Application, Settings};
 use std::{fs::File, path::PathBuf};
 
 mod alarm;
+mod app;
 
 const DEFAULT_CONFIG_FILE_NAME: &str = "proc_alarm.json";
 
@@ -35,5 +37,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let alarms = alarm::read_alarms(&mut config_file)?;
 
-    Ok(())
+    Ok(app::App::run(Settings::with_flags((alarms, config_file)))?)
 }
